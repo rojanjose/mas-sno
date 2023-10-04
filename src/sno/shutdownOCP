@@ -1,0 +1,20 @@
+#/bin/bash
+
+echo "Shutting down the OCP cluster.."
+echo "Check the expiration date for the kube-apiserver-to-kubelet-signer..."
+oc -n openshift-kube-apiserver-operator get secret kube-apiserver-to-kubelet-signer -o jsonpath='{.metadata.annotations.auth\.openshift\.io/certificate-not-after}{"\n"}'
+
+echo "Check the expiration date for the kubelet certificates..."
+oc get no -l node-role.kubernetes.io/master --no-headers -o name \
+| xargs -I {} --  oc debug {} -- bash -c \
+'chroot /host sudo -E openssl x509 -in /var/lib/kubelet/pki/kubelet-client-current.pem -noout -enddate \
+&& chroot /host sudo -E openssl x509 -in /var/lib/kubelet/pki/kubelet-server-current.pem -noout -enddate'
+
+echo "Shutting down the nodes..."
+for node in $(oc get nodes -o jsonpath='{.items[*].metadata.name}'); 
+do 
+    echo "Shutting down node: ${node}"
+    oc debug node/${node} -- chroot /host sudo -E shutdown -h 1; 
+done 
+
+echo "OCP shutdown complete!"

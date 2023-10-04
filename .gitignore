@@ -1,0 +1,9 @@
+.env
+.kube
+.ssh
+_workdir
+/temp
+
+license.dat
+pull-secret.txt
+*.bak

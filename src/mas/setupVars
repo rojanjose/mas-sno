@@ -1,0 +1,7 @@
+
+export CLUSTER_NAME=rjc412
+export MAS_STORAGE_CLASS=gp2-csi
+export LICENSE_ID=$(head -n 1 license.dat | cut -f 3 -d ' ')
+export IBM_ENTITLEMENT_KEY=<entitlement-key-goes-here>
+
+

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+OCP_VERSION=4.12.34
+CLI_OS=mac
+CLI_FILE=openshift-install-${CLI_OS}-${OCP_VERSION}.tar.gz
+DOWNLOAD_URL=https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/${OCP_VERSION}/${CLI_FILE}
+
+echo "Fetching installer from..."
+echo ${DOWNLOAD_URL}
+
+wget ${DOWNLOAD_URL} && \
+tar -xvf ${CLI_FILE} -C /usr/local/bin/ openshift-install && \
+chmod +x /usr/local/bin/openshift-install && \
+rm -f ${CLI_FILE}
+
+echo "Installed openshift-install cli..."
+openshift-install version

@@ -1,0 +1,6 @@
+#/bin/bash
+
+echo "Setting up cron task for OCP etcd database ..."
+oc apply -f ocp-backup.yaml
+echo "OCP etcd backup set to run at the following schedule:"
+grep schedule ocp-backup.yaml
