@@ -5,6 +5,7 @@ Warning: The instructions in this section describes the procedure to bring the e
 ## Backup etcd
 
 1. Setup a crontask for regular backups of /etcd database.
+    
     Login to the cluster using the admin credentials and run the following command:
 
     ```
@@ -23,6 +24,7 @@ Warning: The instructions in this section describes the procedure to bring the e
     ```
 
 1. Shut down the OCP
+    
     Login to the cluster using the admin credentials and run the following command:
 
     ```

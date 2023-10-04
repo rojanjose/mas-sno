@@ -12,12 +12,14 @@ Follow this guide to install single node OpenShift (SNO) in your AWS account. Th
 ## Deploy cluster
 
 1. Install Prerequisites
+
     ```
     cd src/sno; ./installCLI.sh
     ```
 1. Setup the installation configuration. 
+    
     `cd src/sno` and edit the script `setupVars`
-
+    
     Set the parameters as described in the table below:
 
     | Property | Description | Example value |

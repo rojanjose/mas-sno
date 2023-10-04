@@ -12,13 +12,15 @@ Install Maximo Application Suite - Manage on a Single Node OpenShift.
 ## Deploy MAS Manage
 
 1. Login into the cluster.
+
     Login to the cluster via the CLI using the admin credentials from the OpenShift web console.
 
     ```
     oc login --token=xxxx --server=https://myocpserver
     ```
 
-1. Setup the installation configuration. 
+1. Setup the installation configuration.
+ 
     `cd src/mas` and edit the script `setupVars`
 
     Set the parameters as described in the table below:
