@@ -1,6 +1,6 @@
 #/bin/bash
 
-EC2_INSTANCE_TAG=mas-sno-dkkb2-master-0
+EC2_INSTANCE_TAG="${1:-your-ec2-instance-tag}"
 EC2_INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${EC2_INSTANCE_TAG}" --query "Reservations[].Instances[].InstanceId" --no-paginate | jq -r '.[0]')
 
 echo "Starting up the OCP cluster..."

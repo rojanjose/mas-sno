@@ -1,6 +1,7 @@
 # MAS * SNO * AWS
 
 Provision a low footprint Maximo Manage environment on AWS.
+
 (Note: This installation was verified on MacOS 13.5 only)
 
 1. Install Openshift

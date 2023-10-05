@@ -8,26 +8,29 @@ then
     exit 0
 fi
 
+MANAGE_NS="${1:-mas-tcmax-manage}"
+DATABASE_NS="${2:-db2u}"
+
 echo "Starting up DB2.."
-oc scale deployment c-db2w-shared-ldap --replicas=1 -n db2u
-oc scale statefulset c-db2w-shared-db2u --replicas=1 -n db2u
-oc scale statefulset c-db2w-shared-etcd --replicas=1 -n db2u
+oc scale deployment c-db2w-shared-ldap --replicas=1 -n ${DATABASE_NS}
+oc scale statefulset c-db2w-shared-db2u --replicas=1 -n ${DATABASE_NS}
+oc scale statefulset c-db2w-shared-etcd --replicas=1 -n ${DATABASE_NS}
 
 echo "Staring Maximo Application Suite.."
 echo
 
-oc scale deployment ibm-mas-manage-operator --replicas=1 -n mas-tcmax-manage
-oc scale deployment ibm-truststore-mgr-controller-manager --replicas=1 -n mas-tcmax-manage
+oc scale deployment ibm-mas-manage-operator --replicas=1 -n ${MANAGE_NS}
+oc scale deployment ibm-truststore-mgr-controller-manager --replicas=1 -n ${MANAGE_NS}
 
-oc scale deployment tcmax-monitoragent --replicas=1 -n mas-tcmax-manage
-oc scale deployment tcmax-usersyncagent --replicas=1 -n mas-tcmax-manage
+oc scale deployment tcmax-monitoragent --replicas=1 -n ${MANAGE_NS}
+oc scale deployment tcmax-usersyncagent --replicas=1 -n ${MANAGE_NS}
 
-oc scale deployment tcmax-entitymgr-appstatus --replicas=1 -n mas-tcmax-manage
-oc scale deployment tcmax-entitymgr-bdi --replicas=1 -n mas-tcmax-manage
-oc scale deployment tcmax-entitymgr-ws --replicas=1 -n mas-tcmax-manage
-oc scale deployment tcmax-groupsyncagent --replicas=1 -n mas-tcmax-manage
+oc scale deployment tcmax-entitymgr-appstatus --replicas=1 -n ${MANAGE_NS}
+oc scale deployment tcmax-entitymgr-bdi --replicas=1 -n ${MANAGE_NS}
+oc scale deployment tcmax-entitymgr-ws --replicas=1 -n ${MANAGE_NS}
+oc scale deployment tcmax-groupsyncagent --replicas=1 -n ${MANAGE_NS}
 
-oc scale deployment tcmax-masdev-all --replicas=1 -n mas-tcmax-manage
-oc scale deployment tcmax-masdev-manage-maxinst --replicas=1 -n mas-tcmax-manage
+oc scale deployment tcmax-masdev-all --replicas=1 -n ${MANAGE_NS}
+oc scale deployment tcmax-masdev-manage-maxinst --replicas=1 -n ${MANAGE_NS}
 
 echo "MAS Manage started.."

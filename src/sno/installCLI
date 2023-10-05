@@ -1,17 +1,45 @@
 #!/bin/bash
 
+CLI_OS="${1:-mac}"
+CLI_ARCH="${2:-x86_64}"
+
 OCP_VERSION=4.12.34
-CLI_OS=mac
-CLI_FILE=openshift-install-${CLI_OS}-${OCP_VERSION}.tar.gz
-DOWNLOAD_URL=https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/${OCP_VERSION}/${CLI_FILE}
+OC_CLI_FILE=openshift-client-${CLI_OS}.tar.gz
+OC_INSTALLER_FILE=openshift-install-${CLI_OS}-${OCP_VERSION}.tar.gz
 
-echo "Fetching installer from..."
-echo ${DOWNLOAD_URL}
+DOWNLOAD_URL=https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/${OCP_VERSION}
 
-wget ${DOWNLOAD_URL} && \
-tar -xvf ${CLI_FILE} -C /usr/local/bin/ openshift-install && \
+echo "Installing openshift installer from..."
+echo ${DOWNLOAD_URL}/${OC_INSTALLER_FILE}
+
+wget ${DOWNLOAD_URL}/${OC_INSTALLER_FILE} && \
+tar -xvf ${OC_INSTALLER_FILE} -C /usr/local/bin/ openshift-install && \
 chmod +x /usr/local/bin/openshift-install && \
-rm -f ${CLI_FILE}
+rm -f ${OC_INSTALLER_FILE}
 
-echo "Installed openshift-install cli..."
+echo "Installing openshift CLI from..."
+echo ${DOWNLOAD_URL}/${OC_CLI_FILE}
+
+wget ${DOWNLOAD_URL}/${OC_CLI_FILE} && \
+tar -xvf ${OC_CLI_FILE} -C /usr/local/bin/ oc && \
+chmod +x /usr/local/bin/oc && \
+rm -f ${OC_CLI_FILE}
+
+JQ_FILE=jq-${CLI_OS}-i386
+JQ_VERSION=1.7
+
+echo "Installing jq..."
+wget https://github.com/jqlang/jq/releases/download/jq-${JQ_VERSION}/${JQ_FILE} && \
+tar -xvf ${JQ_FILE} -C /usr/local/bin/ jq && \
+chmod +x /usr/local/bin/jq && \
+rm -f ${JQ_FILE}
+
+echo "Installed prereq tools..."
 openshift-install version
+
+openshift-install version
+
+jq --version
+
+aws --version
+
